@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cqow47bch5ocs"]
+
+[ext_resource type="Script" uid="uid://cljo0h54ukqrs" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dxjh4c8f6sey7" path="res://bird.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://dpknet7defifu" path="res://pipe.tscn" id="2_lquwl"]
+[ext_resource type="Texture2D" uid="uid://20liarpn4d5" path="res://istockphoto-1218078447-612x612.jpg" id="3_7mycd"]
+[ext_resource type="PackedScene" uid="uid://dkfybum1em5q" path="res://ground.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://00l5jc7ri33a" path="res://game_over.tscn" id="6_7mycd"]
+
+[node name="Main" type="Node" unique_id=164982865]
+script = ExtResource("1_h2yge")
+pipe_scene = ExtResource("2_lquwl")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=980986861]
+position = Vector2(-182.84314, -102.500015)
+scale = Vector2(1.4362745, 1.2500001)
+texture = ExtResource("3_7mycd")
+offset = Vector2(434, 384)
+
+[node name="Bird" parent="." unique_id=713697937 instance=ExtResource("2_0xm2m")]
+
+[node name="Ground" parent="." unique_id=1998694810 instance=ExtResource("4_1bvp3")]
+z_index = 1
+
+[node name="PipeTimer" type="Timer" parent="." unique_id=932761336]
+wait_time = 1.5
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1378110353]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.5
+offset_right = 28.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Score:0"
+
+[node name="GameOver" parent="." unique_id=1067716944 instance=ExtResource("6_7mycd")]
+
+[connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]
